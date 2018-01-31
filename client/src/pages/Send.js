@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Navigation from '../components/Navigation.js';
 import { Form, Input, TextArea, Button } from 'semantic-ui-react'
 import Textbox from '../components/Textbox';
+import Home from './Home';
 import '../App.css';
 
 import API from "../utils/API";
@@ -10,7 +11,7 @@ class Sends extends Component {
     // Setting our component's initial state
     state = {
         toys:[],
-        firstNameame: "",
+        username: "",
         lastName: "",
         phone: "",
         password: "",
@@ -24,7 +25,7 @@ class Sends extends Component {
     loadToys = () => {
         API.getToys()
             .then(res =>
-                console.log(res.data)
+                console.log(this.state.username)
             )
             .catch(err => console.log(err));
     };
@@ -40,7 +41,7 @@ class Sends extends Component {
         event.preventDefault();
         if (this.state.phone && this.state.message) {
             API.updateToy({
-                _id: this.state.id,
+                id: this.state.id,
                 phone: this.state.phone,
                 message: this.state.message
             })

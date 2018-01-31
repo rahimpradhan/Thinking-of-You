@@ -15,13 +15,26 @@ module.exports = function(app) {
     app.get("/api/toys/latest",function (req, res) {
         db.toy.findAll({
             limit: 1,
-            order: [['id', 'DESC']]
+            order: [['updatedAt', 'DESC']]
+        }).then(function (dbtoy) {
+            res.json(dbtoy);
+            console.log(dbtoy);
+        });
+    });
+
+
+    app.get("/api/toys/user",function (req, res) {
+        db.toy.find(
+        {
+            where:{
+                username: req.body.username
+            }
         }).then(function (dbtoy) {
             res.json(dbtoy);
             console.log(dbtoy);
         });
 
-    })
+    });
 
     app.put("/api/toys", function(req, res) {
         console.log(req.body.phone);
@@ -36,7 +49,7 @@ module.exports = function(app) {
             lastName: req.body.lastName,
         }, {
             where: {
-                id: req.body.id
+                username: req.body.username
             }
         }).then(function(dbtoy) {
             res.json(dbtoy);
